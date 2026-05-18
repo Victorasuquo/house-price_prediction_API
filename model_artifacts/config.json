@@ -1,0 +1,15 @@
+{
+    "model_type": "LinearRegression",
+    "features": [
+        "size_sqft",
+        "bedrooms",
+        "age_years"
+    ],
+    "test_mse": 390970384.4634851,
+    "test_rmse": 19772.97105807534,
+    "test_mae": 15534.366330980276,
+    "test_r2": 0.9782867280195535,
+    "run_id": "905ca95a3a0c41af8c4c16020038f942",
+    "description": "House price prediction based on size, bedrooms, age",
+    "mlflow_tracking_uri": "file:///Users/ghgfd/Documents/MLOPS/mlruns"
+}
