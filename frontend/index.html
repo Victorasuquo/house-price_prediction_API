@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction - ML Model</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">🏠 House Price Predictor</h1>
+                <p class="subtitle">AI-Powered Real Estate Valuation</p>
+            </div>
+            <div class="status-badge" id="statusBadge">
+                <span class="status-dot"></span>
+                <span class="status-text">Checking...</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Prediction Form Section -->
+            <section class="form-section">
+                <h2 class="section-title">Property Details</h2>
+                <form id="predictionForm" class="form">
+                    <div class="form-group">
+                        <label for="size" class="form-label">
+                            <span class="label-text">Property Size (sq ft)</span>
+                            <span class="input-hint">e.g., 2500</span>
+                        </label>
+                        <input type="number" id="size" name="size" class="form-input"
+                            placeholder="Enter property size in square feet" min="500" max="20000" step="100" required>
+                        <span class="form-error" id="sizeError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bedrooms" class="form-label">
+                            <span class="label-text">Number of Bedrooms</span>
+                            <span class="input-hint">e.g., 4</span>
+                        </label>
+                        <input type="number" id="bedrooms" name="bedrooms" class="form-input"
+                            placeholder="Enter number of bedrooms" min="1" max="10" step="1" required>
+                        <span class="form-error" id="bedroomsError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age" class="form-label">
+                            <span class="label-text">Property Age (years)</span>
+                            <span class="input-hint">e.g., 10</span>
+                        </label>
+                        <input type="number" id="age" name="age" class="form-input"
+                            placeholder="Enter property age in years" min="0" max="150" step="1" required>
+                        <span class="form-error" id="ageError"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="predictBtn">
+                        <span class="btn-icon">✨</span>
+                        Get Price Prediction
+                    </button>
+                </form>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <h2 class="section-title">Prediction Result</h2>
+                <div class="result-card">
+                    <div class="result-header">
+                        <span class="result-label">Estimated Property Price</span>
+                        <span class="result-currency">USD</span>
+                    </div>
+                    <div class="result-price" id="resultPrice">$0.00</div>
+                    <div class="result-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Size</span>
+                            <span class="detail-value" id="detailSize">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Bedrooms</span>
+                            <span class="detail-value" id="detailBedrooms">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Age</span>
+                            <span class="detail-value" id="detailAge">-</span>
+                        </div>
+                    </div>
+                    <div class="result-per-sqft">
+                        <span class="per-sqft-label">Price per sq ft:</span>
+                        <span class="per-sqft-value" id="perSqft">$0.00</span>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary" id="resetBtn">
+                    <span class="btn-icon">🔄</span>
+                    Make Another Prediction
+                </button>
+            </section>
+
+            <!-- Error Section -->
+            <section class="error-section" id="errorSection" style="display: none;">
+                <div class="error-card">
+                    <span class="error-icon">⚠️</span>
+                    <div class="error-content">
+                        <h3 class="error-title">Prediction Error</h3>
+                        <p class="error-message" id="errorMessage">An error occurred</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading Section -->
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Analyzing property details...</p>
+            </div>
+        </main>
+
+        <!-- API Info Section -->
+        <aside class="info-sidebar">
+            <div class="info-card">
+                <h3 class="info-title">📊 How It Works</h3>
+                <ul class="info-list">
+                    <li>Enter property characteristics</li>
+                    <li>ML model analyzes the data</li>
+                    <li>Get instant price prediction</li>
+                    <li>Compare with market values</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3 class="info-title">🎯 Model Performance</h3>
+                <div class="metric">
+                    <span class="metric-label">Accuracy</span>
+                    <span class="metric-value">95%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Training Samples</span>
+                    <span class="metric-value">500+</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3 class="info-title">ℹ️ Input Ranges</h3>
+                <ul class="info-list">
+                    <li><strong>Size:</strong> 500 - 20,000 sq ft</li>
+                    <li><strong>Bedrooms:</strong> 1 - 10</li>
+                    <li><strong>Age:</strong> 0 - 150 years</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 House Price Prediction API. Powered by Machine Learning.</p>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>

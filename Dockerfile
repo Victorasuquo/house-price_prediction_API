@@ -12,6 +12,9 @@ COPY model_artifacts ./model_artifacts/
 COPY app.py .
 COPY predict.py .
 
+# Copy frontend static files
+COPY frontend ./frontend/
+
 EXPOSE 8080
 
 # Run uvicorn server — use PORT env var for Cloud Run compatibility

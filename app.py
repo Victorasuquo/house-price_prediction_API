@@ -1,6 +1,9 @@
 # app.py
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import joblib
 import json
@@ -10,9 +13,12 @@ from predict import load_artifacts, predict
 # Load artifacts once at startup
 model, config = load_artifacts()
 
-# Create FastAPI app
-app = FastAPI(description="ML model served with FastAPI for House Price Predictions")
-app.title = "House Price Prediction API"
+# Create FastAPI app — Swagger UI available at /docs
+app = FastAPI(
+    title="House Price Prediction API",
+    description="ML model served with FastAPI for House Price Predictions",
+    docs_url="/docs",
+)
 
 # Enable CORS for frontend access
 app.add_middleware(
@@ -45,6 +51,18 @@ def predict(request: PredictionRequest):
         return PredictionResponse(predicted_price_usd=round(prediction, 2))
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+# --- Serve frontend static files ---
+# Determine the frontend directory (works both locally and in Docker)
+FRONTEND_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frontend")
+
+@app.get("/", include_in_schema=False)
+async def serve_frontend():
+    """Serve the frontend index.html at the root URL."""
+    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
+
+# Mount static files (CSS, JS) — this must come after route definitions
+app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 # Optional: run with uvicorn when script executed directly
 if __name__ == "__main__":
